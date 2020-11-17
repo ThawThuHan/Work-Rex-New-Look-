@@ -34,7 +34,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
           backgroundColor: Theme.of(context).accentColor,
           title: TextField(
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
             controller: searchController,
             autocorrect: false,
             onSubmitted: (name) async {
