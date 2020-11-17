@@ -56,6 +56,21 @@ class _ProfilePageState extends State<ProfilePage> {
                         : Container(),
                   ),
                   Align(
+                    alignment: Alignment.topLeft,
+                    child: isUser
+                        ? IconButton(
+                            splashColor: Colors.grey,
+                            splashRadius: 20.0,
+                            tooltip: 'Edit Profile',
+                            color: Theme.of(context).accentColor,
+                            icon: Icon(Icons.logout),
+                            onPressed: () {
+                              MyAuthService.signOut();
+                            },
+                          )
+                        : Container(),
+                  ),
+                  Align(
                     alignment: Alignment.center,
                     child: user.imgUrl == null
                         ? ProfilePlaceholder(

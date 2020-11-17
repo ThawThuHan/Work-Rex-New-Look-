@@ -118,7 +118,7 @@ class _RegisterNextState extends State<RegisterNext> {
                     validator: (String val) {
                       if (val.isEmpty) {
                         return 'password is required!';
-                      } else if (!(val.length > 6)) {
+                      } else if (!(val.length >= 6)) {
                         return 'password need at least 6 char!';
                       }
                       return null;
