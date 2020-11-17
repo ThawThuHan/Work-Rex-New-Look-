@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "791448583579",
+    "firebase_url": "https://work-rex-c00b5.firebaseio.com",
+    "project_id": "work-rex-c00b5",
+    "storage_bucket": "work-rex-c00b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791448583579:android:d0871602aec009a718353e",
+        "android_client_info": {
+          "package_name": "info.triosys.workrex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791448583579-ldb3i8mfaeui4iacgcjvfhfo3i8hprsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "info.triosys.workrex",
+            "certificate_hash": "bb02447c0cd375247dd583ae3c6544f6b925da7f"
+          }
+        },
+        {
+          "client_id": "791448583579-hvmeenmcma56efeq40iffthicck61q0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWs9U3p1qyYe-FMI3DyGCUWDgixX9QfFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791448583579-hvmeenmcma56efeq40iffthicck61q0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
