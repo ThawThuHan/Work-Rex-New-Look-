@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:workrex/code_models/user_model.dart';
-import 'package:workrex/custom_widget/profile_pic.dart';
-import 'package:workrex/custom_widget/profileplaceholder.dart';
-import 'package:workrex/screens/homeBNavigatorPages/profile_page.dart';
-import 'package:workrex/services/user_database.dart';
+import '../../code_models/user_model.dart';
+import '../../custom_widget/profile_pic.dart';
+import '../../custom_widget/profileplaceholder.dart';
+import '../../screens/homeBNavigatorPages/profile_page.dart';
+import '../../services/user_database.dart';
 
 class SearchUserPage extends StatefulWidget {
   final WorkRexUser user;
@@ -44,6 +44,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
             },
             decoration: InputDecoration(
                 hintText: 'Search Users',
+                hintStyle: TextStyle(color: Colors.grey),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(30),

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:workrex/code_models/post_model.dart';
-import 'package:workrex/custom_widget/cached_networkImage.dart';
-import 'package:workrex/custom_widget/profile_pic.dart';
-import 'package:workrex/custom_widget/profileplaceholder.dart';
-import 'package:workrex/custom_widget/timeago.dart';
+import '../code_models/post_model.dart';
+import '../custom_widget/cached_networkImage.dart';
+import '../custom_widget/profile_pic.dart';
+import '../custom_widget/profileplaceholder.dart';
+import '../custom_widget/timeago.dart';
 
 class PostTile extends StatelessWidget {
   PostTile({
     @required this.post,
-    @required this.imgUrls,
   });
 
   final PageController pageController = PageController(
     viewportFraction: 0.8,
   );
   final PostModel post;
-  final List<dynamic> imgUrls;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +36,19 @@ class PostTile extends StatelessWidget {
                     imgUrl: post.postOwnerImgUrl,
                     radius: 22.0,
                   ),
-            title: Text(post.postOwnerName),
-            subtitle: Text(post.postOwerDept),
-            trailing: Text(Timeago.displayTimeAgoFromTimestamp(
-                post.onCreated.toDate().toString())),
+            title: Text(
+              post.postOwnerName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+                '${post.postOwerDept} ${Timeago.displayTimeAgoFromTimestamp(post.onCreated.toDate().toString())}'),
+            trailing: IconButton(
+              splashRadius: 20.0,
+              icon: Icon(Icons.more_vert),
+              onPressed: () {},
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -55,7 +62,7 @@ class PostTile extends StatelessWidget {
                   maxLines: 5,
                   style: TextStyle(fontSize: 18.0),
                 ),
-                imgUrls.isEmpty
+                post.postImgUrls.isEmpty
                     ? Container()
                     : Container(
                         height: 300.0,
@@ -68,7 +75,7 @@ class PostTile extends StatelessWidget {
               ],
             ),
           ),
-          imgUrls.isEmpty
+          post.postImgUrls.isEmpty
               ? SizedBox(
                   height: 20.0,
                 )

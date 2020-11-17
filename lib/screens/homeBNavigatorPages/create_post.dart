@@ -1,14 +1,14 @@
 import 'dart:io';
-
+import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:workrex/code_models/post_model.dart';
-import 'package:workrex/custom_widget/progress_hub.dart';
-import 'package:workrex/services/post_database.dart';
+
+import '../../code_models/post_model.dart';
+import '../../custom_widget/progress_hub.dart';
+import '../../services/post_database.dart';
 import '../../code_models/user_model.dart';
 import '../../custom_widget/profile_pic.dart';
-import 'package:uuid/uuid.dart';
 
 class CreatePost extends StatefulWidget {
   final WorkRexUser user;

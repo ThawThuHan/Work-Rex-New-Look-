@@ -114,8 +114,7 @@ class _SubHomeState extends State<SubHome> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           PostModel post = data[index];
-                          return PostTile(
-                              post: post, imgUrls: post.postImgUrls);
+                          return PostTile(post: post);
                         }),
                   );
                 },
