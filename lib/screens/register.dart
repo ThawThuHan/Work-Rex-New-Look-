@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   imageFormGallery() async {
     PickedFile imagePick =
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+        await ImagePicker().getImage(source: ImageSource.gallery);
     if (imagePick != null) {
       File image = File(imagePick.path);
       setState(() {
@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   imageFormCamera() async {
     PickedFile imagePick =
-        await ImagePicker.platform.pickImage(source: ImageSource.camera);
+        await ImagePicker().getImage(source: ImageSource.camera);
     if (imagePick != null) {
       File image = File(imagePick.path);
       setState(() {

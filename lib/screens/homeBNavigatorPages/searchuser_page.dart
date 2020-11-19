@@ -8,8 +8,9 @@ import '../../services/user_database.dart';
 class SearchUserPage extends StatefulWidget {
   final WorkRexUser user;
   final String crrentUserId;
+  final String currentUserName;
 
-  SearchUserPage({this.user, this.crrentUserId});
+  SearchUserPage({this.user, this.crrentUserId, this.currentUserName});
 
   @override
   _SearchUserPageState createState() => _SearchUserPageState();
@@ -93,6 +94,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
                           builder: (context) => ProfilePage(
                             user: users[index],
                             currentUserid: widget.crrentUserId,
+                            currentUserName: widget.currentUserName,
                           ),
                         ),
                       );

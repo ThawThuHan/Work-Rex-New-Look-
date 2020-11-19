@@ -9,6 +9,11 @@ class UserService {
     await _userRef.doc(data['userid']).set(data);
   }
 
+  static Future<void> updateData(
+      String objectId, Map<String, dynamic> data) async {
+    _userRef.doc(objectId).update(data);
+  }
+
   static Stream<List<WorkRexUser>> getUsers() {
     return _userRef
         .snapshots()

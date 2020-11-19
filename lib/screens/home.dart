@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   WorkRexUser user;
   String currentUserId;
+  String currentUserName;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   init() async {
     user = await UserService.getUserbyId(widget.userid);
     currentUserId = user.userid;
+    currentUserName = user.name;
   }
 
   _onTap(value) {
@@ -56,10 +58,12 @@ class _HomePageState extends State<HomePage> {
             SearchUserPage(
               user: user,
               crrentUserId: currentUserId,
+              currentUserName: currentUserName,
             ),
             ProfilePage(
               user: user,
               currentUserid: currentUserId,
+              currentUserName: currentUserName,
             ),
           ],
         ),

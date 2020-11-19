@@ -3,31 +3,34 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workrex/code_models/user_model.dart';
 import 'package:workrex/custom_widget/profile_pic.dart';
 import 'package:workrex/custom_widget/profileplaceholder.dart';
+import 'package:workrex/screens/homeBNavigatorPages/ratingmodalbottomsheet.dart';
 import '../../services/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   final WorkRexUser user;
   final String currentUserid;
+  final String currentUserName;
 
-  ProfilePage({this.user, this.currentUserid});
+  ProfilePage({this.user, this.currentUserid, this.currentUserName});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(user: user);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   WorkRexUser user;
   bool isUser = true;
 
+  _ProfilePageState({this.user});
+
   @override
   void initState() {
     super.initState();
-    user = widget.user;
     checkCurrentUser();
   }
 
   checkCurrentUser() {
-    if (widget.currentUserid != widget.user.userid) {
+    if (widget.currentUserid != user.userid) {
       isUser = false;
     }
   }
@@ -102,12 +105,23 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 10.0,
               ),
-              showUserRating(),
+              showUserRating(user.overall.toDouble()),
               Divider(
                 color: Theme.of(context).accentColor,
               ),
               FlatButton(
-                onPressed: isUser ? null : () {},
+                onPressed: isUser
+                    ? null
+                    : () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) => RateModalBottom(
+                                  subjectId: widget.currentUserid,
+                                  subjectName: widget.currentUserName,
+                                  objectId: widget.user.userid,
+                                  objectName: widget.user.name,
+                                ));
+                      },
                 child: Text(
                   '+ Rate',
                   style: TextStyle(fontSize: 18.0),
@@ -122,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Column(
                     children: [
                       Text(
-                        '3.5',
+                        '${user.overall}',
                         style: TextStyle(
                           fontSize: 48.0,
                         ),
@@ -133,10 +147,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      buildRateReview('Communication', 3.5),
-                      buildRateReview('performance', 3.5),
-                      buildRateReview('personality', 3.5),
-                      buildRateReview('TeamWork', 3.5),
+                      buildRateReview(
+                          'Performance', user.performance.toDouble()),
+                      buildRateReview(
+                          'Personality', user.personality.toDouble()),
+                      buildRateReview('Knowledge', user.knowledge.toDouble()),
+                      buildRateReview('TeamWork', user.teamwork.toDouble()),
                     ],
                   )
                 ],
@@ -175,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Column showUserRating() {
+  Column showUserRating(double rate) {
     return Column(
       children: [
         Text(
@@ -187,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         SmoothStarRating(
           allowHalfRating: true,
-          rating: 3.5,
+          rating: rate,
           isReadOnly: true,
           size: 50,
           color: Theme.of(context).accentColor,
