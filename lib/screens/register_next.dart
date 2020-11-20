@@ -52,6 +52,11 @@ class _RegisterNextState extends State<RegisterNext> {
           email: user.email,
           userid: userid,
           imgUrl: widget.imgUrl,
+          performance: 0.0,
+          personality: 0.0,
+          knowledge: 0.0,
+          teamwork: 0.0,
+          overall: 0.0,
         );
         await UserService.saveUser(data: WorkRexUser.toMap(user: workRexUser));
         Navigator.pop(context);

@@ -36,6 +36,7 @@ dependencies:
   smooth_star_rating: ^1.1.1
   uuid: ^2.2.2
   cached_network_image: ^2.3.3
+  flutter_spinkit: ^4.1.2+1
 
 dev_dependencies:
   flutter_test:

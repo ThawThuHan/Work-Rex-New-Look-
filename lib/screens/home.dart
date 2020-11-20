@@ -1,38 +1,30 @@
 import 'package:flutter/material.dart';
 import '../code_models/user_model.dart';
-import '../services/user_database.dart';
 import '../screens/homeBNavigatorPages/profile_page.dart';
 import '../screens/homeBNavigatorPages/rating_page.dart';
 import '../screens/homeBNavigatorPages/searchuser_page.dart';
 import '../screens/homeBNavigatorPages/sub_home.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.userid});
+  HomePage({Key key, this.user});
 
-  final String userid;
+  final WorkRexUser user;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(user: user);
 }
 
 class _HomePageState extends State<HomePage> {
+  _HomePageState({this.user});
+
+  final WorkRexUser user;
   PageController _pageController;
   int pageIndex = 0;
-  WorkRexUser user;
-  String currentUserId;
-  String currentUserName;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    init();
-  }
-
-  init() async {
-    user = await UserService.getUserbyId(widget.userid);
-    currentUserId = user.userid;
-    currentUserName = user.name;
   }
 
   _onTap(value) {
@@ -57,13 +49,13 @@ class _HomePageState extends State<HomePage> {
             RatingPage(),
             SearchUserPage(
               user: user,
-              crrentUserId: currentUserId,
-              currentUserName: currentUserName,
+              crrentUserId: user.userid,
+              currentUserName: user.name,
             ),
             ProfilePage(
               user: user,
-              currentUserid: currentUserId,
-              currentUserName: currentUserName,
+              currentUserid: user.userid,
+              currentUserName: user.name,
             ),
           ],
         ),

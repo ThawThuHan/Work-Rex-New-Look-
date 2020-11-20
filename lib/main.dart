@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:workrex/screens/apploadingscreen.dart';
 import 'package:workrex/screens/home.dart';
 
 import 'screens/welcome.dart';
@@ -27,9 +28,9 @@ class MyApp extends StatelessWidget {
           if (!snapshot.hasData) {
             return WelcomePage();
           }
-          String userid = snapshot.data.uid;
-          return HomePage(
-            userid: userid,
+          String userId = snapshot.data.uid;
+          return AppLoadingScreen(
+            userId: userId,
           );
         },
       ),
