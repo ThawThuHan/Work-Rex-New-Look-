@@ -42,8 +42,10 @@ class PostTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text(
-                '${post.postOwerDept} ${Timeago.displayTimeAgoFromTimestamp(post.onCreated.toDate().toString())}'),
+            subtitle: post.onCreated == null
+                ? Container()
+                : Text(
+                    '${post.postOwerDept} ${Timeago.displayTimeAgoFromTimestamp(post.onCreated.toDate().toString())}'),
             trailing: IconButton(
               splashRadius: 20.0,
               icon: Icon(Icons.more_vert),

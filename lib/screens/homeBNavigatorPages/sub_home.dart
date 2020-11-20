@@ -17,6 +17,17 @@ class SubHome extends StatefulWidget {
 }
 
 class _SubHomeState extends State<SubHome> {
+  PageController _pageController;
+  String department;
+  String selectedPage;
+
+  @override
+  void initState() {
+    _pageController = PageController();
+    department = widget.user.department;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,49 +91,126 @@ class _SubHomeState extends State<SubHome> {
                 thickness: 2.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: 80,
-                    child: Text('Public'),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedPage = 'public';
+                          });
+                          _pageController.animateToPage(0,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn);
+                        },
+                        child: Text(
+                          'Public',
+                          style: selectedPage == 'public'
+                              ? TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).accentColor,
+                                )
+                              : null,
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
                     height: 30.0,
                     width: 1.0,
                     color: Colors.black,
                   ),
-                  Container(
-                    width: 80,
-                    child: Text('Department'),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedPage = 'department';
+                        });
+                        _pageController.animateToPage(1,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeIn);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Department',
+                          style: selectedPage == 'department'
+                              ? TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).accentColor,
+                                )
+                              : null,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
               Divider(
                 thickness: 2.0,
               ),
-              StreamBuilder<List<PostModel>>(
-                stream: PostService.getPostsfromPublic(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final data = snapshot.data;
-                  return Expanded(
-                    child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          PostModel post = data[index];
-                          return PostTile(post: post);
-                        }),
-                  );
-                },
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  children: [
+                    buildPublicPostView(),
+                    buildDeptPostView(department),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  StreamBuilder<List<PostModel>> buildPublicPostView() {
+    return StreamBuilder<List<PostModel>>(
+      stream: PostService.getPostsfromPublic(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final data = snapshot.data;
+        return ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            PostModel post = data[index];
+            return PostTile(post: post);
+          },
+        );
+      },
+    );
+  }
+
+  StreamBuilder<List<PostModel>> buildDeptPostView(String department) {
+    return StreamBuilder<List<PostModel>>(
+      stream: PostService.getPostsfromDept(department),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final data = snapshot.data;
+        return ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            PostModel post = data[index];
+            return PostTile(post: post);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -14,8 +14,19 @@ class PostService {
   }
 
   static Stream<List<PostModel>> getPostsfromPublic() {
+    print('fetch');
     final snapshot = _postRef
         .doc('public')
+        .collection('user posts')
+        .orderBy('onCreated', descending: true)
+        .snapshots();
+    return snapshot
+        .map((event) => event.docs.map((e) => PostModel.formDoc(e)).toList());
+  }
+
+  static Stream<List<PostModel>> getPostsfromDept(String department) {
+    final snapshot = _postRef
+        .doc(department)
         .collection('user posts')
         .orderBy('onCreated', descending: true)
         .snapshots();
