@@ -20,11 +20,15 @@ class _SubHomeState extends State<SubHome> {
   PageController _pageController;
   String department;
   String selectedPage;
+  Stream<List<PostModel>> publicPosts;
+  Stream<List<PostModel>> deptPosts;
 
   @override
   void initState() {
     _pageController = PageController();
     department = widget.user.department;
+    publicPosts = PostService.getPostsfromPublic();
+    deptPosts = PostService.getPostsfromDept(department);
     super.initState();
   }
 
@@ -169,7 +173,7 @@ class _SubHomeState extends State<SubHome> {
 
   StreamBuilder<List<PostModel>> buildPublicPostView() {
     return StreamBuilder<List<PostModel>>(
-      stream: PostService.getPostsfromPublic(),
+      stream: publicPosts,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -190,7 +194,7 @@ class _SubHomeState extends State<SubHome> {
 
   StreamBuilder<List<PostModel>> buildDeptPostView(String department) {
     return StreamBuilder<List<PostModel>>(
-      stream: PostService.getPostsfromDept(department),
+      stream: deptPosts,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

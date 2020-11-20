@@ -14,7 +14,6 @@ class PostService {
   }
 
   static Stream<List<PostModel>> getPostsfromPublic() {
-    print('fetch');
     final snapshot = _postRef
         .doc('public')
         .collection('user posts')
