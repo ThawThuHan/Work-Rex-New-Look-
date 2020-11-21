@@ -46,10 +46,12 @@ class _HomePageState extends State<HomePage> {
             SubHome(
               user: user,
             ),
-            RatingPage(),
+            RatingPage(
+              dept: user.department,
+            ),
             SearchUserPage(
               user: user,
-              crrentUserId: user.userid,
+              currentUserId: user.userid,
               currentUserName: user.name,
             ),
             ProfilePage(

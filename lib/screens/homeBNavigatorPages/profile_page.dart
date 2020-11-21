@@ -3,6 +3,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workrex/code_models/user_model.dart';
 import 'package:workrex/custom_widget/profile_pic.dart';
 import 'package:workrex/custom_widget/profileplaceholder.dart';
+import 'package:workrex/main.dart';
 import 'package:workrex/screens/homeBNavigatorPages/ratingmodalbottomsheet.dart';
 import '../../services/auth_service.dart';
 
@@ -64,11 +65,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? IconButton(
                             splashColor: Colors.grey,
                             splashRadius: 20.0,
-                            tooltip: 'Edit Profile',
+                            tooltip: 'Logout',
                             color: Theme.of(context).accentColor,
                             icon: Icon(Icons.logout),
                             onPressed: () {
                               MyAuthService.signOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyApp(),
+                                ),
+                              );
                             },
                           )
                         : Container(),
@@ -136,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Column(
                     children: [
                       Text(
-                        '${user.overall}',
+                        '${user.overall.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 48.0,
                         ),

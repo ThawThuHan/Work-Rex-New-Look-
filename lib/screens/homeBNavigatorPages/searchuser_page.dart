@@ -7,10 +7,10 @@ import '../../services/user_database.dart';
 
 class SearchUserPage extends StatefulWidget {
   final WorkRexUser user;
-  final String crrentUserId;
+  final String currentUserId;
   final String currentUserName;
 
-  SearchUserPage({this.user, this.crrentUserId, this.currentUserName});
+  SearchUserPage({this.user, this.currentUserId, this.currentUserName});
 
   @override
   _SearchUserPageState createState() => _SearchUserPageState();
@@ -20,11 +20,14 @@ class _SearchUserPageState extends State<SearchUserPage> {
   List<WorkRexUser> users = [];
   List<WorkRexUser> _searchResult = [];
   TextEditingController searchController;
+  Stream<List<WorkRexUser>> streamWorkRexUsers;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    streamWorkRexUsers =
+        UserService.getUserbyDepartment(widget.user.department);
   }
 
   @override
@@ -50,6 +53,10 @@ class _SearchUserPageState extends State<SearchUserPage> {
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(30),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 prefixIcon: Icon(
                   Icons.search,
                   color: Colors.white,
@@ -72,7 +79,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
         ),
         body: Container(
           child: StreamBuilder<List<WorkRexUser>>(
-            stream: UserService.getUserbyDepartment(widget.user.department),
+            stream: streamWorkRexUsers,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Center(
@@ -93,7 +100,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
                         MaterialPageRoute(
                           builder: (context) => ProfilePage(
                             user: users[index],
-                            currentUserid: widget.crrentUserId,
+                            currentUserid: widget.currentUserId,
                             currentUserName: widget.currentUserName,
                           ),
                         ),

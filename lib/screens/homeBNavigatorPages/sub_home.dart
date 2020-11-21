@@ -19,7 +19,7 @@ class SubHome extends StatefulWidget {
 class _SubHomeState extends State<SubHome> {
   PageController _pageController;
   String department;
-  String selectedPage;
+  String selectedPage = 'public';
   Stream<List<PostModel>> publicPosts;
   Stream<List<PostModel>> deptPosts;
 
