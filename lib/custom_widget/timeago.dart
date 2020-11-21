@@ -6,15 +6,15 @@ class Timeago {
     final hour = int.parse(timestamp.substring(11, 13));
     final minute = int.parse(timestamp.substring(14, 16));
 
-    final DateTime videoDate = DateTime(year, month, day, hour, minute);
-    final int diffInHours = DateTime.now().difference(videoDate).inHours;
+    final DateTime inputDate = DateTime(year, month, day, hour, minute);
+    final int diffInHours = DateTime.now().difference(inputDate).inHours;
 
     String timeAgo = '';
     String timeUnit = '';
     int timeValue = 0;
 
     if (diffInHours < 1) {
-      final diffInMinutes = DateTime.now().difference(videoDate).inMinutes;
+      final diffInMinutes = DateTime.now().difference(inputDate).inMinutes;
       timeValue = diffInMinutes;
       timeUnit = 'm';
     } else if (diffInHours < 24) {

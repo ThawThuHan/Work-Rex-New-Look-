@@ -179,7 +179,7 @@ class _CreatePostState extends State<CreatePost> {
         ),
         body: ProgressHUD(
           inAsyncCall: _isAsyncCall,
-          child: Column(
+          child: ListView(
             children: [
               ListTile(
                 leading: CustomCircleProfilePic(

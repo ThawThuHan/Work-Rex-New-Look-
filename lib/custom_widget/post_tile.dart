@@ -15,75 +15,128 @@ class PostTile extends StatelessWidget {
   );
   final PostModel post;
 
+  buildPostHeader(
+      {String profilePic, String name, String dept, String timeago}) {
+    return Row(
+      children: [
+        profilePic.isEmpty
+            ? ProfilePlaceholder(radius: 22.0)
+            : CustomCircleProfilePic(
+                imgUrl: post.postOwnerImgUrl,
+                radius: 22.0,
+              ),
+        SizedBox(
+          width: 8.0,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.0,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    '$dept .',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  Text('$timeago')
+                ],
+              ),
+            ],
+          ),
+        ),
+        Icon(Icons.more_vert),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> viewPhotos = post.postImgUrls.map((e) {
-      return Container(
-        padding: EdgeInsets.all(8.0),
-        // width: 100.0,
-        child: CustomCachedNetworkImage(
-          mediaUrl: e,
-        ),
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            // padding: EdgeInsets.all(8.0),
+            child: CustomCachedNetworkImage(
+              mediaUrl: e,
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              margin: EdgeInsets.all(5.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '${post.postImgUrls.indexOf(e) + 1}/${post.postImgUrls.length}',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     }).toList();
     return Container(
+      // margin: EdgeInsets.symmetric(vertical: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: [
-          ListTile(
-            leading: post.postOwnerImgUrl.isEmpty
-                ? ProfilePlaceholder(radius: 22.0)
-                : CustomCircleProfilePic(
-                    imgUrl: post.postOwnerImgUrl,
-                    radius: 22.0,
-                  ),
-            title: Text(
-              post.postOwnerName,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: post.onCreated == null
-                ? Container()
-                : Text(
-                    '${post.postOwerDept} ${Timeago.displayTimeAgoFromTimestamp(post.onCreated.toDate().toString())}'),
-            trailing: IconButton(
-              splashRadius: 20.0,
-              icon: Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                buildPostHeader(
+                  profilePic: post.postOwnerImgUrl,
+                  name: post.postOwnerName,
+                  dept: post.postOwerDept,
+                  timeago: post.onCreated != null
+                      ? Timeago.displayTimeAgoFromTimestamp(
+                          post.onCreated.toDate().toString())
+                      : Container(),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
                 Text(
                   post.postText,
-                  maxLines: 5,
-                  style: TextStyle(fontSize: 18.0),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
                 ),
                 post.postImgUrls.isEmpty
-                    ? Container()
+                    ? SizedBox(
+                        height: 5.0,
+                      )
                     : Container(
-                        height: 300.0,
+                        height: 400,
                         child: PageView(
-                          controller: pageController,
-                          // scrollDirection: Axis.horizontal,
                           children: viewPhotos,
                         ),
                       ),
+                Divider(
+                  thickness: 2.0,
+                ),
               ],
             ),
-          ),
-          post.postImgUrls.isEmpty
-              ? SizedBox(
-                  height: 20.0,
-                )
-              : Container(),
-          Divider(
-            thickness: 2.0,
           ),
         ],
       ),

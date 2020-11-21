@@ -158,6 +158,7 @@ class _SubHomeState extends State<SubHome> {
               Expanded(
                 child: PageView(
                   controller: _pageController,
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
                     buildPublicPostView(),
                     buildDeptPostView(department),
