@@ -12,6 +12,7 @@ class MyRaisedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+      color: Theme.of(context).accentColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(12),
@@ -24,6 +25,7 @@ class MyRaisedButton extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 18.0,
+            color: Colors.white,
           ),
         ),
       ),

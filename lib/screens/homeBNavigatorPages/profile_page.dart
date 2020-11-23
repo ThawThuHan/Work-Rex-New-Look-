@@ -4,6 +4,7 @@ import 'package:workrex/code_models/user_model.dart';
 import 'package:workrex/custom_widget/profile_pic.dart';
 import 'package:workrex/custom_widget/profileplaceholder.dart';
 import 'package:workrex/main.dart';
+import 'package:workrex/screens/homeBNavigatorPages/edit_profile.dart';
 import 'package:workrex/screens/homeBNavigatorPages/ratingmodalbottomsheet.dart';
 import '../../services/auth_service.dart';
 
@@ -55,7 +56,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             tooltip: 'Edit Profile',
                             color: Theme.of(context).accentColor,
                             icon: Icon(Icons.edit),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditProfilePage(
+                                    user: widget.user,
+                                  ),
+                                ),
+                              );
+                            },
                           )
                         : Container(),
                   ),

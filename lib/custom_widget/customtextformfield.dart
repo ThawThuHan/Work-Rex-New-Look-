@@ -26,10 +26,16 @@ class MyTextFormField extends StatelessWidget {
         validator: validator,
         obscureText: secureText,
         decoration: InputDecoration(
-            hintText: hintText,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-            )),
+          hintText: hintText,
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).accentColor, width: 2.0),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+        ),
       ),
     );
   }
