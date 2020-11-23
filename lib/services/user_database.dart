@@ -44,4 +44,11 @@ class UserService {
     WorkRexUser user = WorkRexUser.formDoc(doc);
     return user;
   }
+
+  static Stream<WorkRexUser> getStreamUserbyId(String userid) {
+    return _userRef
+        .doc(userid)
+        .snapshots()
+        .map((event) => WorkRexUser.formDoc(event));
+  }
 }

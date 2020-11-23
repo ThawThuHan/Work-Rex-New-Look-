@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomCircleProfilePic extends StatelessWidget {
@@ -16,10 +17,12 @@ class CustomCircleProfilePic extends StatelessWidget {
       radius: radius,
       child: Container(
         decoration: BoxDecoration(
+          color: Colors.transparent,
           shape: BoxShape.circle,
           border: Border.all(color: Theme.of(context).accentColor),
           image: DecorationImage(
-            image: NetworkImage(imgUrl),
+            fit: BoxFit.cover,
+            image: CachedNetworkImageProvider(imgUrl),
           ),
         ),
       ),
