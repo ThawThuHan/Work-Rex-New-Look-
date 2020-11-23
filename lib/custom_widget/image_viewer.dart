@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-class ShowPhoto extends StatefulWidget {
+class ImageViewer extends StatefulWidget {
   final String imgUrl;
 
-  ShowPhoto({this.imgUrl});
+  ImageViewer({this.imgUrl});
 
   @override
-  _ShowPhotoState createState() => _ShowPhotoState();
+  _ImageViewerState createState() => _ImageViewerState();
 }
 
-class _ShowPhotoState extends State<ShowPhoto> {
+class _ImageViewerState extends State<ImageViewer> {
   @override
   Widget build(BuildContext context) {
     return Container(

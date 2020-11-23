@@ -4,7 +4,7 @@ import '../custom_widget/cached_networkImage.dart';
 import '../custom_widget/profile_pic.dart';
 import '../custom_widget/profileplaceholder.dart';
 import '../custom_widget/timeago.dart';
-import 'showPhoto.dart';
+import 'image_viewer.dart';
 
 class PostTile extends StatelessWidget {
   PostTile({
@@ -71,7 +71,7 @@ class PostTile extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ShowPhoto(imgUrl: e)));
+                      builder: (context) => ImageViewer(imgUrl: e)));
             },
             child: Container(
               // padding: EdgeInsets.all(8.0),
