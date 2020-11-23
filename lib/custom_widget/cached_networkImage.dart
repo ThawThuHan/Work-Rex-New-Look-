@@ -10,11 +10,9 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: mediaUrl,
-      fit: BoxFit.cover,
-      placeholder: (context, url) => Padding(
-        child: Image.asset('assets/images/defaultplaceholderimage.png'),
-        padding: EdgeInsets.all(20.0),
-      ),
+      // fit: BoxFit.fill,
+      placeholder: (context, url) =>
+          Image.asset('assets/images/defaultplaceholderimage.png'),
       errorWidget: (context, url, error) =>
           Image.asset('assets/images/defaultplaceholderimage.png'),
     );

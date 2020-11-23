@@ -4,6 +4,7 @@ import '../custom_widget/cached_networkImage.dart';
 import '../custom_widget/profile_pic.dart';
 import '../custom_widget/profileplaceholder.dart';
 import '../custom_widget/timeago.dart';
+import 'showPhoto.dart';
 
 class PostTile extends StatelessWidget {
   PostTile({
@@ -65,10 +66,18 @@ class PostTile extends StatelessWidget {
       return Stack(
         fit: StackFit.expand,
         children: [
-          Container(
-            // padding: EdgeInsets.all(8.0),
-            child: CustomCachedNetworkImage(
-              mediaUrl: e,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ShowPhoto(imgUrl: e)));
+            },
+            child: Container(
+              // padding: EdgeInsets.all(8.0),
+              child: CustomCachedNetworkImage(
+                mediaUrl: e,
+              ),
             ),
           ),
           Align(
