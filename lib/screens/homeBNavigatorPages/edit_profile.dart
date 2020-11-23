@@ -142,6 +142,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
+                                fit: BoxFit.cover,
                                 image: FileImage(image),
                               ),
                             ),
