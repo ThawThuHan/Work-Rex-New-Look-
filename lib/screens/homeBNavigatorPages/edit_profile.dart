@@ -7,6 +7,7 @@ import 'package:workrex/code_models/user_model.dart';
 import 'package:workrex/custom_widget/customRaisedButton.dart';
 import 'package:workrex/custom_widget/customtextformfield.dart';
 import 'package:workrex/custom_widget/profile_pic.dart';
+import 'package:workrex/custom_widget/profileplaceholder.dart';
 import 'package:workrex/custom_widget/progress_hub.dart';
 import 'package:workrex/services/user_database.dart';
 
@@ -131,10 +132,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 alignment: Alignment.center,
                 children: [
                   this.image == null
-                      ? CustomCircleProfilePic(
-                          imgUrl: user.imgUrl,
-                          radius: 60.0,
-                        )
+                      ? user.imgUrl == null
+                          ? ProfilePlaceholder(radius: 60.0)
+                          : CustomCircleProfilePic(
+                              imgUrl: user.imgUrl,
+                              radius: 60.0,
+                            )
                       : CircleAvatar(
                           radius: 60.0,
                           // backgroundImage: FileImage(image),

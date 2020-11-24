@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workrex/code_models/user_model.dart';
 import 'package:workrex/custom_widget/profile_pic.dart';
+import 'package:workrex/custom_widget/profileplaceholder.dart';
 import 'package:workrex/services/user_database.dart';
 
 class RatingPage extends StatefulWidget {
@@ -68,10 +69,12 @@ class _RatingPageState extends State<RatingPage> {
                                       SizedBox(
                                         width: 10.0,
                                       ),
-                                      CustomCircleProfilePic(
-                                        imgUrl: user.imgUrl,
-                                        radius: 24.0,
-                                      ),
+                                      user.imgUrl == null
+                                          ? ProfilePlaceholder(radius: 24.0)
+                                          : CustomCircleProfilePic(
+                                              imgUrl: user.imgUrl,
+                                              radius: 24.0,
+                                            ),
                                       SizedBox(
                                         width: 20.0,
                                       ),

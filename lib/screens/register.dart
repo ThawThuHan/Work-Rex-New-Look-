@@ -169,26 +169,35 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _formKey,
               child: ListView(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      _imagePickerDialog(context);
-                    },
-                    child: image != null
-                        ? CircleAvatar(
-                            radius: 60.0,
-                            // backgroundImage: FileImage(image),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: FileImage(image),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      image != null
+                          ? CircleAvatar(
+                              radius: 60.0,
+                              // backgroundImage: FileImage(image),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: FileImage(image),
+                                  ),
                                 ),
                               ),
+                            )
+                          : ProfilePlaceholder(
+                              radius: 60.0,
                             ),
-                          )
-                        : ProfilePlaceholder(
-                            radius: 60.0,
-                          ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _imagePickerDialog(context);
+                        },
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20.0,

@@ -20,7 +20,7 @@ class PostTile extends StatelessWidget {
       {String profilePic, String name, String dept, String timeago}) {
     return Row(
       children: [
-        profilePic.isEmpty
+        profilePic == null
             ? ProfilePlaceholder(radius: 22.0)
             : CustomCircleProfilePic(
                 imgUrl: post.postOwnerImgUrl,
