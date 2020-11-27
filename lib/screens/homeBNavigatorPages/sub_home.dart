@@ -186,7 +186,10 @@ class _SubHomeState extends State<SubHome> {
           itemCount: data.length,
           itemBuilder: (context, index) {
             PostModel post = data[index];
-            return PostTile(post: post);
+            return PostTile(
+              post: post,
+              username: widget.user.name,
+            );
           },
         );
       },
@@ -207,7 +210,10 @@ class _SubHomeState extends State<SubHome> {
           itemCount: data.length,
           itemBuilder: (context, index) {
             PostModel post = data[index];
-            return PostTile(post: post);
+            return PostTile(
+              post: post,
+              username: widget.user.name,
+            );
           },
         );
       },

@@ -9,12 +9,11 @@ import 'image_viewer.dart';
 class PostTile extends StatelessWidget {
   PostTile({
     @required this.post,
+    this.username,
   });
 
-  final PageController pageController = PageController(
-    viewportFraction: 0.8,
-  );
   final PostModel post;
+  final String username;
 
   buildPostHeader(
       {String profilePic, String name, String dept, String timeago}) {
@@ -55,13 +54,14 @@ class PostTile extends StatelessWidget {
             ],
           ),
         ),
-        Icon(Icons.more_vert),
+        post.postOwnerName == username ? Icon(Icons.more_vert) : Container(),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // print("${post.postOwnerName}, $username");
     List<Widget> viewPhotos = post.postImgUrls.map((e) {
       return Stack(
         fit: StackFit.expand,

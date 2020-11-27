@@ -22,8 +22,8 @@ class UserService {
 
   static Stream<List<WorkRexUser>> getUserbyDepartment(String department) {
     return _userRef
-        .where(department)
-        .orderBy('overall', descending: true)
+        .where("department", isEqualTo: department)
+        // .orderBy('overall', descending: true)
         .snapshots()
         .map((event) => event.docs.map((e) => WorkRexUser.formDoc(e)).toList());
   }

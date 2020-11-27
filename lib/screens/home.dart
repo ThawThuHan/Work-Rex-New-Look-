@@ -76,16 +76,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        body: StreamBuilder<Object>(
-            stream: UserService.getStreamUserbyId(widget.userId),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return buildLoadingScreen();
-              }
-              final WorkRexUser user = snapshot.data;
-              return PageView(
+    return StreamBuilder<Object>(
+        stream: UserService.getStreamUserbyId(widget.userId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return buildLoadingScreen();
+          }
+          final WorkRexUser user = snapshot.data;
+          return Container(
+            child: Scaffold(
+              body: PageView(
                 controller: _pageController,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
@@ -94,6 +94,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   RatingPage(
                     dept: user.department,
+                    currentUserId: user.userid,
+                    currentUserName: user.name,
                   ),
                   SearchUserPage(
                     user: user,
@@ -106,23 +108,26 @@ class _HomePageState extends State<HomePage> {
                     currentUserName: user.name,
                   ),
                 ],
-              );
-            }),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: pageIndex,
-          selectedItemColor: Theme.of(context).accentColor,
-          unselectedItemColor: Colors.grey,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Rating'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Users'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: 'Profile'),
-          ],
-          onTap: _onTap,
-        ),
-      ),
-    );
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: pageIndex,
+                selectedItemColor: Theme.of(context).accentColor,
+                unselectedItemColor: Colors.grey,
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.home), label: 'Home'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.star), label: 'Rating'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.search), label: 'Users'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.account_circle), label: 'Profile'),
+                ],
+                onTap: _onTap,
+              ),
+            ),
+          );
+        });
   }
 
   @override

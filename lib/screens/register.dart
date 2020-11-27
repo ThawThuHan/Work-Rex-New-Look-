@@ -84,8 +84,8 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Text(
                 e,
                 style: TextStyle(
-                  color: Colors.white,
-                ),
+                    // color: Colors.white,
+                    ),
               ),
               value: e,
             ))
@@ -157,6 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'Register',
               style: TextStyle(
                 fontSize: 24.0,
+                color: Theme.of(context).accentColor,
               ),
             ),
             elevation: 0.0,

@@ -30,11 +30,13 @@ class _RegisterNextState extends State<RegisterNext> {
   TextEditingController emailController, passwordController, repassController;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isAsyncCall = false;
+  bool _isFail = false;
 
   validateRegister() async {
     if (_formKey.currentState.validate()) {
       setState(() {
         _isAsyncCall = true;
+        _isFail = false;
       });
       String email = emailController.text.trim();
       String password = repassController.text.trim();
@@ -58,9 +60,15 @@ class _RegisterNextState extends State<RegisterNext> {
           teamwork: 0.0,
           overall: 0.0,
         );
+
         await UserService.saveUser(data: WorkRexUser.toMap(user: workRexUser));
         Navigator.pop(context);
         setState(() {
+          _isAsyncCall = false;
+        });
+      } else {
+        setState(() {
+          _isFail = true;
           _isAsyncCall = false;
         });
       }
@@ -87,6 +95,7 @@ class _RegisterNextState extends State<RegisterNext> {
               'Register',
               style: TextStyle(
                 fontSize: 24.0,
+                color: Theme.of(context).accentColor,
               ),
             ),
             elevation: 0.0,
@@ -139,6 +148,16 @@ class _RegisterNextState extends State<RegisterNext> {
                   SizedBox(
                     height: 20.0,
                   ),
+                  _isFail
+                      ? Center(
+                          child: Text(
+                            'Something Wrong!!',
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      : Container(),
                   MyRaisedButton(
                     label: 'Done',
                     onPressed: validateRegister,
