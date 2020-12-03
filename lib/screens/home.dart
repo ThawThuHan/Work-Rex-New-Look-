@@ -80,7 +80,9 @@ class _HomePageState extends State<HomePage> {
         stream: UserService.getStreamUserbyId(widget.userId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return buildLoadingScreen();
+            return Scaffold(
+              body: buildLoadingScreen(),
+            );
           }
           final WorkRexUser user = snapshot.data;
           return Container(

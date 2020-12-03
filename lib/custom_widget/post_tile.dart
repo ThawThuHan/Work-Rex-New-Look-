@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workrex/screens/homeBNavigatorPages/create_post.dart';
 import '../code_models/post_model.dart';
 import '../custom_widget/cached_networkImage.dart';
 import '../custom_widget/profile_pic.dart';
@@ -15,7 +16,7 @@ class PostTile extends StatelessWidget {
   final PostModel post;
   final String username;
 
-  buildPostHeader(
+  buildPostHeader(BuildContext context,
       {String profilePic, String name, String dept, String timeago}) {
     return Row(
       children: [
@@ -54,7 +55,21 @@ class PostTile extends StatelessWidget {
             ],
           ),
         ),
-        post.postOwnerName == username ? Icon(Icons.more_vert) : Container(),
+        post.postOwnerName == username
+            ? IconButton(
+                splashRadius: 20.0,
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreatePost(
+                              post: post,
+                            )),
+                  );
+                },
+              )
+            : Container(),
       ],
     );
   }
@@ -111,13 +126,14 @@ class PostTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 buildPostHeader(
+                  context,
                   profilePic: post.postOwnerImgUrl,
                   name: post.postOwnerName,
                   dept: post.postOwerDept,
                   timeago: post.onCreated != null
                       ? Timeago.displayTimeAgoFromTimestamp(
                           post.onCreated.toDate().toString())
-                      : Container(),
+                      : '',
                 ),
                 SizedBox(
                   height: 8.0,

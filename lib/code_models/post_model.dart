@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostModel {
+  final String postId;
   final String postOwnerName;
   final String postOwerDept;
   final String postOwnerImgUrl;
@@ -11,6 +12,7 @@ class PostModel {
   final Timestamp onCreated;
 
   PostModel({
+    this.postId,
     this.postOwnerName,
     this.postOwnerImgUrl,
     this.postOwerDept,
@@ -32,11 +34,13 @@ class PostModel {
       postImgUrls: data['postImgUrls'],
       postLikes: data['postLikes'],
       onCreated: data['onCreated'],
+      postId: doc.id,
     );
   }
 
   static toMap(PostModel postModel, {bool isNew = true}) {
     Map<String, dynamic> map = Map<String, dynamic>();
+    map['postId'] = postModel.postId;
     map['postOwnerName'] = postModel.postOwnerName;
     map['postOwnerImgUrl'] = postModel.postOwnerImgUrl;
     map['postOwnerDept'] = postModel.postOwerDept;

@@ -5,6 +5,14 @@ class PostService {
   static CollectionReference _postRef =
       FirebaseFirestore.instance.collection('Post');
 
+  static Future<void> updatePost(
+    String postTo,
+    String postId,
+    Map<String, dynamic> map,
+  ) async {
+    _postRef.doc(postTo).collection('user posts').doc(postId).update(map);
+  }
+
   static Future<void> uploadPost(
     String postId,
     String postTo,
@@ -31,5 +39,9 @@ class PostService {
         .snapshots();
     return snapshot
         .map((event) => event.docs.map((e) => PostModel.formDoc(e)).toList());
+  }
+
+  static Future<void> postDelete(String postTo, String postId) async {
+    await _postRef.doc(postTo).collection('user posts').doc(postId).delete();
   }
 }

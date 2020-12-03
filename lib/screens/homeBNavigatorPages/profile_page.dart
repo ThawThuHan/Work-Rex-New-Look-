@@ -230,51 +230,55 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container showUserInfo(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).accentColor),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildCustomText(label: 'Email', isLabel: true),
-              buildCustomText(label: 'ID', isLabel: true),
-              buildCustomText(label: 'Department', isLabel: true),
-              buildCustomText(label: 'Phone No.', isLabel: true),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
+  showUserInfo(BuildContext context) {
+    return Material(
+      elevation: 9.0,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).accentColor),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildCustomText(label: '-'),
-                buildCustomText(label: '-'),
-                buildCustomText(label: '-'),
-                buildCustomText(label: '-'),
+                buildCustomText(label: 'Email', isLabel: true),
+                buildCustomText(label: 'ID', isLabel: true),
+                buildCustomText(label: 'Department', isLabel: true),
+                buildCustomText(label: 'Phone No.', isLabel: true),
               ],
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Tooltip(
-                    message: user.email,
-                    child: buildCustomText(label: user.email)),
-                buildCustomText(label: user.staffId),
-                buildCustomText(label: user.department),
-                buildCustomText(label: user.phone),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildCustomText(label: '-'),
+                  buildCustomText(label: '-'),
+                  buildCustomText(label: '-'),
+                  buildCustomText(label: '-'),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Tooltip(
+                      message: user.email,
+                      child: buildCustomText(label: user.email)),
+                  buildCustomText(label: user.staffId),
+                  buildCustomText(label: user.department),
+                  buildCustomText(label: user.phone),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

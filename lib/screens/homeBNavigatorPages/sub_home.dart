@@ -77,16 +77,20 @@ class _SubHomeState extends State<SubHome> {
                         imgUrl: widget.user.imgUrl,
                         radius: 25.0,
                       ),
-                title: Container(
-                  padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Theme.of(context).accentColor),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Text(
-                    'What is your Announcement?',
-                    style: TextStyle(
-                      fontSize: 18.0,
+                title: Material(
+                  borderRadius: BorderRadius.circular(18),
+                  elevation: 4.0,
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Theme.of(context).accentColor),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Text(
+                      'What is your Announcement?',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
                     ),
                   ),
                 ),

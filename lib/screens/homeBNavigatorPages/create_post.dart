@@ -12,8 +12,9 @@ import '../../custom_widget/profile_pic.dart';
 
 class CreatePost extends StatefulWidget {
   final WorkRexUser user;
+  final PostModel post;
 
-  CreatePost({this.user});
+  CreatePost({this.user, this.post});
 
   @override
   _CreatePostState createState() => _CreatePostState();
@@ -26,16 +27,33 @@ class _CreatePostState extends State<CreatePost> {
   String postId;
   TextEditingController _postController;
   bool _isAsyncCall = false;
-
-  listofphoto() {}
+  String username;
+  String department;
+  String userImgUrl;
+  List postImgUrl = [];
 
   @override
   void initState() {
     super.initState();
     _postController = TextEditingController();
-    postPlace = ['public', widget.user.department];
+    checkPostEditorNot();
+    postPlace = ['public', department];
     selectValue = postPlace[0];
     postId = Uuid().v4();
+  }
+
+  checkPostEditorNot() {
+    if (widget.user == null) {
+      username = widget.post.postOwnerName;
+      department = widget.post.postOwerDept;
+      userImgUrl = widget.post.postOwnerImgUrl;
+      postImgUrl = widget.post.postImgUrls;
+      _postController.text = widget.post.postText;
+    } else {
+      username = widget.user.name;
+      department = widget.user.department;
+      userImgUrl = widget.user.imgUrl;
+    }
   }
 
   List<DropdownMenuItem> getDrowButtomitems() {
@@ -72,42 +90,49 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   getImages() {
-    List<Widget> children = images.map((e) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
+    if (images.isEmpty) {
+      return Container();
+    } else {
+      List<Widget> children = images.map((e) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+            ),
+            width: 100.0,
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Image.file(e),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      images.remove(e);
+                    });
+                  },
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            ),
           ),
-          width: 100.0,
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.file(e),
-              ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    images.remove(e);
-                  });
-                },
-                child: Icon(Icons.clear),
-              ),
-            ],
-          ),
+        );
+      }).toList();
+      return Container(
+        height: 100,
+        width: double.infinity,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: children,
         ),
       );
-    }).toList();
-    return Container(
-      height: 100,
-      width: double.infinity,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: children,
-      ),
-    );
+    }
   }
 
   _addPhoto() {
@@ -162,37 +187,87 @@ class _CreatePostState extends State<CreatePost> {
     return imgUrl;
   }
 
+  _uploadPost() async {
+    if (widget.user != null) {
+      if (_postController.text.isNotEmpty) {
+        setState(() {
+          _isAsyncCall = true;
+        });
+        List<String> imgUrls = await getDownloadUrl();
+        PostModel postModel = PostModel(
+          postOwnerName: widget.user.name,
+          postOwerDept: widget.user.department,
+          postOwnerImgUrl: widget.user.imgUrl,
+          postImgUrls: imgUrls,
+          postTo: selectValue,
+          postText: _postController.text.trim(),
+        );
+        await PostService.uploadPost(
+          postId,
+          selectValue,
+          PostModel.toMap(postModel),
+        );
+        setState(() {
+          _isAsyncCall = false;
+          Navigator.pop(context);
+        });
+      } else {
+        print('null');
+      }
+    } else {
+      print(widget.post.postId);
+      print(widget.post.postTo);
+      setState(() {
+        _isAsyncCall = true;
+      });
+      List<String> imgUrls = await getDownloadUrl();
+      await PostService.updatePost(
+        widget.post.postTo,
+        widget.post.postId,
+        {
+          'postText': _postController.text.trim(),
+          'postImgUrls': imgUrls,
+        },
+      );
+      setState(() {
+        _isAsyncCall = false;
+        Navigator.pop(context);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String title = widget.user != null ? "Create Post" : "Edit Post";
     return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Create Post',
-            style: TextStyle(
-              color: Theme.of(context).accentColor,
+      child: ProgressHUD(
+        inAsyncCall: _isAsyncCall,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              title,
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              ),
             ),
+            iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
           ),
-          iconTheme: IconThemeData(color: Theme.of(context).accentColor),
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-        ),
-        body: ProgressHUD(
-          inAsyncCall: _isAsyncCall,
-          child: ListView(
+          body: ListView(
             children: [
               ListTile(
                 leading: CustomCircleProfilePic(
-                  imgUrl: widget.user.imgUrl,
+                  imgUrl: userImgUrl,
                   radius: 20.0,
                 ),
                 title: Text(
-                  widget.user.name,
+                  username,
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
                 ),
-                subtitle: Text(widget.user.department),
+                subtitle: Text(department),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -203,7 +278,7 @@ class _CreatePostState extends State<CreatePost> {
                       style: TextStyle(fontSize: 24.0),
                       cursorColor: Colors.black,
                       controller: _postController,
-                      maxLines: 5,
+                      maxLines: widget.user != null ? 5 : 3,
                       decoration: InputDecoration(
                         hintText: "What's your announcement?",
                         hintStyle: TextStyle(
@@ -216,7 +291,7 @@ class _CreatePostState extends State<CreatePost> {
                         disabledBorder: InputBorder.none,
                       ),
                     ),
-                    images.isEmpty ? Container() : getImages(),
+                    getImages(),
                     FlatButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
@@ -231,7 +306,9 @@ class _CreatePostState extends State<CreatePost> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        buildDropdownButton(),
+                        widget.user != null
+                            ? buildDropdownButton()
+                            : buildDeleteBottom(),
                         Container(
                           height: 40.0,
                           width: 150.0,
@@ -240,29 +317,7 @@ class _CreatePostState extends State<CreatePost> {
                                 borderRadius: BorderRadius.circular(12)),
                             minWidth: double.infinity,
                             color: Theme.of(context).accentColor,
-                            onPressed: () async {
-                              setState(() {
-                                _isAsyncCall = true;
-                              });
-                              List<String> imgUrls = await getDownloadUrl();
-                              PostModel postModel = PostModel(
-                                postOwnerName: widget.user.name,
-                                postOwerDept: widget.user.department,
-                                postOwnerImgUrl: widget.user.imgUrl,
-                                postImgUrls: imgUrls,
-                                postTo: selectValue,
-                                postText: _postController.text.trim(),
-                              );
-                              await PostService.uploadPost(
-                                postId,
-                                selectValue,
-                                PostModel.toMap(postModel),
-                              );
-                              setState(() {
-                                _isAsyncCall = false;
-                                Navigator.pop(context);
-                              });
-                            },
+                            onPressed: _uploadPost,
                             child: Text(
                               'Post Now',
                               style: TextStyle(color: Colors.white),
@@ -276,6 +331,36 @@ class _CreatePostState extends State<CreatePost> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  deletePost() async {
+    await PostService.postDelete(widget.post.postTo, widget.post.postId);
+  }
+
+  Container buildDeleteBottom() {
+    return Container(
+      height: 40.0,
+      width: 150.0,
+      child: FlatButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        minWidth: double.infinity,
+        color: Colors.red,
+        onPressed: () async {
+          setState(() {
+            _isAsyncCall = true;
+          });
+          await deletePost();
+          setState(() {
+            _isAsyncCall = true;
+            Navigator.pop(context);
+          });
+        },
+        child: Text(
+          'Delete Post',
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -302,5 +387,11 @@ class _CreatePostState extends State<CreatePost> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _postController.dispose();
+    super.dispose();
   }
 }

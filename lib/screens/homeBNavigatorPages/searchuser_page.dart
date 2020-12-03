@@ -35,10 +35,12 @@ class _SearchUserPageState extends State<SearchUserPage> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
           title: TextField(
-            cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
+            cursorColor: Theme.of(context).accentColor,
+            style:
+                TextStyle(color: Theme.of(context).accentColor, fontSize: 18.0),
             controller: searchController,
             autocorrect: false,
             onSubmitted: (name) async {
@@ -50,7 +52,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
                 hintText: 'Search Users',
                 hintStyle: TextStyle(color: Colors.grey),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide: BorderSide(color: Theme.of(context).accentColor),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -59,11 +61,11 @@ class _SearchUserPageState extends State<SearchUserPage> {
                 ),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Colors.white,
+                  color: Theme.of(context).accentColor,
                 ),
                 suffixIcon: IconButton(
                   splashRadius: 20.0,
-                  icon: Icon(Icons.clear, color: Colors.white),
+                  icon: Icon(Icons.clear, color: Theme.of(context).accentColor),
                   onPressed: () {
                     _searchResult = [];
                     searchController.clear();
