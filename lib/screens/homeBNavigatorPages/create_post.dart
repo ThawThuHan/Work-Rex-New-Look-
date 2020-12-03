@@ -181,7 +181,7 @@ class _CreatePostState extends State<CreatePost> {
   Future uploadImagesToStorage(String postid, File file) async {
     String filename = Uuid().v1();
     Reference ref =
-        FirebaseStorage.instance.ref().child('/posts/$postId/$filename');
+        FirebaseStorage.instance.ref().child('/posts/$postid/$filename');
     TaskSnapshot task = await ref.putFile(file);
     String imgUrl = await task.ref.getDownloadURL();
     return imgUrl;
@@ -195,6 +195,7 @@ class _CreatePostState extends State<CreatePost> {
         });
         List<String> imgUrls = await getDownloadUrl();
         PostModel postModel = PostModel(
+          postId: postId,
           postOwnerName: widget.user.name,
           postOwerDept: widget.user.department,
           postOwnerImgUrl: widget.user.imgUrl,
@@ -229,6 +230,7 @@ class _CreatePostState extends State<CreatePost> {
           'postImgUrls': imgUrls,
         },
       );
+      await deletePhotoFromFirebaseStorage(widget.post.postImgUrls);
       setState(() {
         _isAsyncCall = false;
         Navigator.pop(context);
@@ -336,6 +338,13 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
+  Future<void> deletePhotoFromFirebaseStorage(List imgUrls) async {
+    for (String imgUrl in imgUrls) {
+      Reference storageRef = FirebaseStorage.instance.refFromURL(imgUrl);
+      await storageRef.delete();
+    }
+  }
+
   deletePost() async {
     await PostService.postDelete(widget.post.postTo, widget.post.postId);
   }
@@ -353,6 +362,7 @@ class _CreatePostState extends State<CreatePost> {
             _isAsyncCall = true;
           });
           await deletePost();
+          await deletePhotoFromFirebaseStorage(widget.post.postImgUrls);
           setState(() {
             _isAsyncCall = true;
             Navigator.pop(context);
