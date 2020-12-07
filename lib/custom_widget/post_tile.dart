@@ -138,7 +138,7 @@ class PostTile extends StatelessWidget {
                 SizedBox(
                   height: 8.0,
                 ),
-                Text(
+                SelectableText(
                   post.postText,
                   style: TextStyle(
                     fontSize: 18.0,
