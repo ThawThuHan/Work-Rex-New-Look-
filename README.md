@@ -7,7 +7,7 @@
 
 Pros <br>
   No Need to email for mini announcement office letter
-  can show employee rating and know who is better.
+  can show employee rating and to know who is better.
   
 Cons <br>
   Cost expensive because of no api call used and use firebase.
