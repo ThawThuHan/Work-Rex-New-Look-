@@ -1,6 +1,17 @@
 # workrex
 
-A new Flutter project.
+Purpose of WorkRex
+  This WorkRex app is used for Office Work Group info Announcement and Rate staff each other and to know who is better.
+  
+Pros & Cons
+
+Pros
+  No Need to email for mini announcement office letter
+  can show employee rating and know who is better.
+  
+Cons
+  Cost expensive because of no api call used and use firebase.
+ 
 
 ## Getting Started
 
