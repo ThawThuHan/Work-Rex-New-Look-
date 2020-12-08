@@ -1,6 +1,6 @@
 # workrex
 
-Purpose of WorkRex <br>
+<b>Purpose of WorkRex</b> <br>
   This WorkRex app is used for Office Work Group info Announcement and Rate staff each other and to know who is better.
   
 <b><u>Pros & Cons</u></b> <br>
