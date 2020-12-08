@@ -1,15 +1,15 @@
 # workrex
 
-Purpose of WorkRex
+Purpose of WorkRex <br>
   This WorkRex app is used for Office Work Group info Announcement and Rate staff each other and to know who is better.
   
-Pros & Cons
+<b><u>Pros & Cons</u></b> <br>
 
-Pros
+Pros <br>
   No Need to email for mini announcement office letter
   can show employee rating and know who is better.
   
-Cons
+Cons <br>
   Cost expensive because of no api call used and use firebase.
  
 
